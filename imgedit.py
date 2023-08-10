@@ -1,8 +1,8 @@
 from PIL import Image, ImageEnhance
 import os
 
-image_folder = 'FOLDER PATH FOR IMAGES'
-output_flder = 'FOLDER PATH FOR EDITED IMAGES'
+image_folder = input("Enter the path to the images folder: ")
+output_folder = input("Enter the path to the output images folder: ")
 image_files = []
 
 #get image files in the folder
@@ -10,12 +10,14 @@ for filename in os.listdir(image_folder):
     if not filename.startswith('.') and filename.lower().endswith(('.jpg', '.jpeg', '.png')):
         image_files.append(filename)
 
+# Ensure the output folder exists
+os.makedirs(output_folder, exist_ok=True)
 
 for img in image_files:
     global input_path
     global output_path
     input_path = image_folder + '/' + img
-    output_path = output_flder + '/' + img
+    output_path = output_folder + '/' + img
 
     def crop_and_enhance_image(input_path, output_path):
         # Open the image using Pillow
@@ -43,3 +45,7 @@ for img in image_files:
         enhanced_image.save(output_path)
 
     crop_and_enhance_image(input_path, output_path)
+
+    print(f"Processed: {img} => {output_path}")
+    
+print("Processing complete.")
